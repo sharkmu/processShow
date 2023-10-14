@@ -27,7 +27,6 @@ namespace processShower
                 last = Regex.Replace(last, "\\)", "");
                 last = Regex.Replace(last, "\\(", "");
                 listBox1.Items.Add(last);
-                Console.WriteLine("test");
             }
         }
     }
