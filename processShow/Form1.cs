@@ -20,13 +20,18 @@ namespace processShower
             InitializeComponent();
             string processNameV;
             string last;
-            foreach(var i in Process.GetProcesses()) 
+            var processList = new List<string>();
+            foreach (var i in Process.GetProcesses()) 
             {
                 processNameV = i.ToString();
                 last = processNameV.Substring(processNameV.LastIndexOf(' ') + 1);
                 last = Regex.Replace(last, "\\)", "");
                 last = Regex.Replace(last, "\\(", "");
-                listBox1.Items.Add(last);
+                processList.Add(last);  
+            }
+            foreach (var i in processList)
+            {
+                listBox1.Items.Add(i);
             }
         }
     }
