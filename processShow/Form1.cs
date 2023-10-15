@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
@@ -25,13 +18,39 @@ namespace processShower
             {
                 processNameV = i.ToString();
                 last = processNameV.Substring(processNameV.LastIndexOf(' ') + 1);
-                last = Regex.Replace(last, "\\)", "");
-                last = Regex.Replace(last, "\\(", "");
+                last = Regex.Replace(last, "[()]", "");
                 processList.Add(last);  
             }
-            foreach (var i in processList)
+            RemoveDuplicates(processList);
+
+            void RemoveDuplicates(List<string> list)
             {
-                listBox1.Items.Add(i);
+                HashSet<string> uniqueElements = new HashSet<string>();
+                List<string> duplicates = new List<string>();
+
+                foreach (var item in list)
+                {
+                    if (uniqueElements.Contains(item))
+                    {
+                        duplicates.Add(item);
+                    }
+                    else
+                    {
+                        uniqueElements.Add(item);
+                    }
+                }
+
+                foreach (var duplicate in duplicates)
+                {
+                    list.RemoveAll(item => item == duplicate);
+                }
+
+                list.Sort();
+
+                foreach (var i in list)
+                {
+                    listBox1.Items.Add(i);
+                }
             }
         }
     }
